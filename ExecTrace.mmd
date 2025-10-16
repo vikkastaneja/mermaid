@@ -1,0 +1,15 @@
+%%{init: {'themeVariables': { 'fontSize': '20px', 'nodeSpacing': 70, 'rankSpacing': 100 }}}%%
+flowchart LR
+
+%% VM
+subgraph VM["VM with NW"]
+    DGIC["DGIC"]
+    FILE[("Log files")]
+    Octopus["Octopus Runbook"]
+end
+
+AZURE["Azure Blob Storage"]
+%% Flow connections
+DGIC -->|Exec Traces| FILE 
+Octopus --> AZURE
+Octopus -- |Access| ---- FILE

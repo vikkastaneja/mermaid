@@ -1,0 +1,20 @@
+flowchart LR
+    FIREWALL["|||<br>|||<br>Firewall<br>|||<br>|||"]
+    subgraph OT["OT NW"]
+        DGIC["DGIC"]
+    end
+
+    subgraph IT["IT NW"]
+        TG["Telegraf"]
+        FILE[("Log files")]
+        Octopus["Octopus Runbook"]
+    end
+    AZURE["Azure Blob Storage"]
+
+    DGIC -- |Exec Trace via UDP| --> FIREWALL
+    FIREWALL -- |Data| --> TG
+    TG --> |Exec Traces| FILE 
+    Octopus --> AZURE
+    Octopus -- |Access| ---- FILE
+
+    

@@ -1,0 +1,8 @@
+sequenceDiagram
+    par Same VM
+        DGIC ->> Disk: Writes exec. trace files to disk
+        loop Every 10 minutes
+            OCTOPUS_RUNBOOK ->> Disk: reads files and zip them
+            OCTOPUS_RUNBOOK ->> Azure_blob: Uploads zip files
+        end
+    end

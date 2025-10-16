@@ -1,0 +1,10 @@
+sequenceDiagram
+    DGIC (OT NW) ->> FIREWALL: Exec. Traces via UDP
+    FIREWALL ->> Telegraf:
+    par IT NW
+        Telegraf ->> Disk: Stores exec. traces as files
+        loop Every 10 minute
+            OCTOPUS_RUNBOOK ->> Disk: reads files and zip them
+            OCTOPUS_RUNBOOK ->> Azure_blob: Uploads zip files
+        end
+    end
