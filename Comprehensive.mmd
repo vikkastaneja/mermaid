@@ -1,0 +1,33 @@
+%%{init: {'themeVariables': { 'fontSize': '20px', 'nodeSpacing': 70, 'rankSpacing': 100 }}}%%
+flowchart LR
+
+%% OT Network
+subgraph OT["OT Network"]
+    DGIC["DGIC"]
+end
+
+%% Visual Firewall (using a dummy node with a tall label)
+FIREWALL["|||<br>|||<br>|||<br>Firewall<br>|||<br>|||<br>|||"]
+
+%% IT Network
+subgraph IT["IT Network"]
+    TLG["Telegraf"]
+    RMQ["RabbitMQ"]
+    CONS["Consumers"]
+    DB["Local InfluxDB"]
+    FILE[("Files")]
+    OCTO["Octopus Playbook"]
+end
+
+AZURE["Azure Blob"]
+INF["InfluxDB Cloud"]
+%% Flow connections
+
+CONS --> INF
+DGIC -- data logs over UDP --> FIREWALL --> TLG -->|Data Logs over MQTT| RMQ --> CONS
+DGIC -- exec trace over UDP --> FIREWALL --> TLG --> |Exec. Traces to files| FILE
+OCTO --> |reads from| FILE
+CONS --> DB
+CONS --> AZURE
+OCTO --> |Uploads exec traces| AZURE
+
