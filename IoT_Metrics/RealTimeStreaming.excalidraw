@@ -1,0 +1,51 @@
+{
+  "type": "excalidraw",
+  "version": 2,
+  "source": "https://marketplace.visualstudio.com/items?itemName=pomdtr.excalidraw-editor",
+  "elements": [
+    {
+      "id": "l_Y2vPjZAvwM-Wb34vv24",
+      "type": "text",
+      "x": 270.1328125,
+      "y": 137.7265625,
+      "width": 876.1993408203125,
+      "height": 2350,
+      "angle": 0,
+      "strokeColor": "#1e1e1e",
+      "backgroundColor": "transparent",
+      "fillStyle": "solid",
+      "strokeWidth": 2,
+      "strokeStyle": "solid",
+      "roughness": 1,
+      "opacity": 100,
+      "groupIds": [],
+      "frameId": null,
+      "index": "a0",
+      "roundness": null,
+      "seed": 1527336181,
+      "version": 27,
+      "versionNonce": 1419143547,
+      "isDeleted": false,
+      "boundElements": null,
+      "updated": 1768638063894,
+      "link": null,
+      "locked": false,
+      "text": "### 1️⃣ Problem definition (1–2 minutes)\n\n* We had telemetry systems independently deployed at each site\n* Full stack replicated per site\n* High cost, schema drift, fragmented data\n* No global analytics or ML readiness\n\n**Goal**\n\n> Centralize telemetry ingestion and analytics while keeping sites lightweight and resilient.\n\n### 2️⃣ Functional requirements (3–4 minutes)\n\n* Ingest high-volume telemetry from hundreds of devices per site\n* Support multiple global sites\n* Support SOC queries (current, average, range)\n* Retain data for 3 years\n\n### 3️⃣ Non-functional requirements (2–3 minutes)\n\nHighlight only what drives architecture:\n\n* High availability\n* Eventual consistency is acceptable\n* Write-heavy workload\n* Large data volume and long retention\n* Geo-distribution\n* Security (IDs only, encrypted)\n\nThis justifies **event-driven + TSDB**.\n\n\n### 4️⃣ APIs (2 minutes)\n\nYou did this well. Keep it short.\n\n* No ingestion APIs (internal pub-sub)\n* Query APIs for dashboards\n* Metadata service for joins\n\nMention Prometheus **only to reject it**. That shows judgment.\n\n### 5️⃣ Data model + partitioning (5 minutes)\n\nExplain:\n\n* Time-series key: site, device, metric, timestamp\n* Partition by site + minute bucket\n* Why minute bucket is the right tradeoff\n* How queries work within and across partitions\n\nThis naturally leads into HLD.\n\n### 6️⃣ High-level design (5–7 minutes)\n\nYou already have a solid diagram.\n\nWalk through **one clean write path** and **one read path**:\n\n* Device service → Event Hub → Stream processor\n* Stream processor → TSDB (hot) + Blob (cold)\n* Query service → cache → TSDB / blob → dashboard\n\nAvoid enumerating every box. Focus on flow.\n\n### 7️⃣ Deep dive (10–15 minutes)\n\nThis is where you **slow down**.\n\nYou chose the *right* deep dive:\n\n> End-to-end ingestion correctness under retries and late/out-of-order events\n\nCover only:\n\n* At-least-once delivery\n* Stable event identity\n* Dedup\n* Raw vs aggregates\n* Hybrid correction approach\n\nThis is where interviewers engage.\n\n---\n\n### 8️⃣ Tradeoffs and closing (2 minutes)\n\nEnd strong.\n\n* Eventual consistency over strict real-time accuracy\n* Slightly more backend complexity\n* Much lower long-term operational cost\n* Future-ready for ML and analytics\n",
+      "fontSize": 20,
+      "fontFamily": 5,
+      "textAlign": "left",
+      "verticalAlign": "top",
+      "containerId": null,
+      "originalText": "### 1️⃣ Problem definition (1–2 minutes)\n\n* We had telemetry systems independently deployed at each site\n* Full stack replicated per site\n* High cost, schema drift, fragmented data\n* No global analytics or ML readiness\n\n**Goal**\n\n> Centralize telemetry ingestion and analytics while keeping sites lightweight and resilient.\n\n### 2️⃣ Functional requirements (3–4 minutes)\n\n* Ingest high-volume telemetry from hundreds of devices per site\n* Support multiple global sites\n* Support SOC queries (current, average, range)\n* Retain data for 3 years\n\n### 3️⃣ Non-functional requirements (2–3 minutes)\n\nHighlight only what drives architecture:\n\n* High availability\n* Eventual consistency is acceptable\n* Write-heavy workload\n* Large data volume and long retention\n* Geo-distribution\n* Security (IDs only, encrypted)\n\nThis justifies **event-driven + TSDB**.\n\n\n### 4️⃣ APIs (2 minutes)\n\nYou did this well. Keep it short.\n\n* No ingestion APIs (internal pub-sub)\n* Query APIs for dashboards\n* Metadata service for joins\n\nMention Prometheus **only to reject it**. That shows judgment.\n\n### 5️⃣ Data model + partitioning (5 minutes)\n\nExplain:\n\n* Time-series key: site, device, metric, timestamp\n* Partition by site + minute bucket\n* Why minute bucket is the right tradeoff\n* How queries work within and across partitions\n\nThis naturally leads into HLD.\n\n### 6️⃣ High-level design (5–7 minutes)\n\nYou already have a solid diagram.\n\nWalk through **one clean write path** and **one read path**:\n\n* Device service → Event Hub → Stream processor\n* Stream processor → TSDB (hot) + Blob (cold)\n* Query service → cache → TSDB / blob → dashboard\n\nAvoid enumerating every box. Focus on flow.\n\n### 7️⃣ Deep dive (10–15 minutes)\n\nThis is where you **slow down**.\n\nYou chose the *right* deep dive:\n\n> End-to-end ingestion correctness under retries and late/out-of-order events\n\nCover only:\n\n* At-least-once delivery\n* Stable event identity\n* Dedup\n* Raw vs aggregates\n* Hybrid correction approach\n\nThis is where interviewers engage.\n\n---\n\n### 8️⃣ Tradeoffs and closing (2 minutes)\n\nEnd strong.\n\n* Eventual consistency over strict real-time accuracy\n* Slightly more backend complexity\n* Much lower long-term operational cost\n* Future-ready for ML and analytics\n",
+      "autoResize": true,
+      "lineHeight": 1.25
+    }
+  ],
+  "appState": {
+    "gridSize": 20,
+    "gridStep": 5,
+    "gridModeEnabled": false,
+    "viewBackgroundColor": "#ffffff"
+  },
+  "files": {}
+}
